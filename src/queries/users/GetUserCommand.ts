@@ -1,0 +1,48 @@
+import { Users } from "../../entity/Users";
+import { getManager } from "typeorm";
+import ICommand from "../../common/ICommand";
+
+export const GETCommand = async (userId: string) => {
+    if(Number(userId) != 0) {
+        return await getManager().getRepository('Users')
+        .createQueryBuilder()
+            .where("id = :id", { id: userId})
+            .getRawOne();
+    }
+    return await getManager().getRepository('Users')
+    .createQueryBuilder()
+        .getRawMany();
+  };
+
+
+/*export class GETCommand implements ICommand {
+    private user:string;
+
+    constructor(user:string) {
+        this.user = user
+    }
+
+    public execute = () => {
+
+        let userId:string
+
+
+        userId = this.user
+
+
+        const status:any = getManager().getRepository('Users')
+        .createQueryBuilder()
+            .where("id = :id", { id: userId})
+            .getRawOne()
+            .then(user => {
+                console.log(`user details`,user)
+                return user
+            })
+            .catch(err => {
+                console.log(`error getting user: ${err}`)
+                return false
+            })
+
+            return{status}
+    }
+}*/
