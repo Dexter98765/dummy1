@@ -29,7 +29,7 @@ export class UpdateUser implements ICommand {
             })
             .where("id = :id", { id: user.id })
             .execute()
-            .then(user => {
+            .then(() => {
                 console.log(`user update success`)
                 return true
             })

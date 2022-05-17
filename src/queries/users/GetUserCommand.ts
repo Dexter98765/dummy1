@@ -1,6 +1,6 @@
-import { Users } from "../../entity/Users";
+
 import { getManager } from "typeorm";
-import ICommand from "../../common/ICommand";
+
 
 export const GETCommand = async (userId: string) => {
     if(Number(userId) != 0) {

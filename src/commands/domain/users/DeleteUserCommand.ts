@@ -1,4 +1,4 @@
-import { Users } from "../../../entity/Users";
+
 import { getManager } from "typeorm";
 import ICommand from "../../../common/ICommand";
 
@@ -12,10 +12,8 @@ export class DeleteUser implements ICommand {
 
     public execute = () => {
 
-        let userId:string
-
-
-        userId = this.user
+        
+        const userId:string = this.user
 
 
         const status:any = getManager().getRepository('Users')
@@ -23,7 +21,7 @@ export class DeleteUser implements ICommand {
             .delete()
             .where("id = :id", { id: userId})
             .execute()
-            .then(user => {
+            .then(() => {
                 console.log(`user delete success`)
                 return true
             })

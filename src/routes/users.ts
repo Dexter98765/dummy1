@@ -1,4 +1,4 @@
-import express, {Request,Response,Application} from 'express';
+import express, {Request,Response} from 'express';
 
 const userRouter = express.Router();
 
@@ -20,11 +20,11 @@ const userDeleteCommandFactory = new UserCommands.UserDeleteCommandFactory();
 
 
 
-userRouter.get('/',(req:Request,res:Response,next)=>{
+userRouter.get('/',(req:Request,res:Response)=>{
     res.send('hello from users')
 });
 
-userRouter.post('/create',(req:Request,res:Response,next)=>{
+userRouter.post('/create',(req:Request,res:Response)=>{
 
     
    console.log(req.body) 
@@ -44,7 +44,7 @@ userRouter.post('/create',(req:Request,res:Response,next)=>{
 })
 
 
-userRouter.put('/update/:id',(req:Request,res:Response,next)=>{
+userRouter.put('/update/:id',(req:Request,res:Response)=>{
 
     
     
@@ -64,7 +64,7 @@ userRouter.put('/update/:id',(req:Request,res:Response,next)=>{
      res.status(statusCode).json('User updated successfully')
  })
 
- userRouter.delete('/delete/:id',(req:Request,res:Response,next)=>{
+ userRouter.delete('/delete/:id',(req:Request,res:Response)=>{
 
     
     
@@ -85,7 +85,7 @@ userRouter.put('/update/:id',(req:Request,res:Response,next)=>{
 })
 
 
-userRouter.get('/getUsers/:id',async (req:Request,res:Response,next)=>{
+userRouter.get('/getUsers/:id',async (req:Request,res:Response)=>{
 
     const results = await QueryCommands.GETCommand(req.params.id)
 

@@ -14,9 +14,6 @@ export class CreateUser implements ICommand {
 
         let user = new Users()
 
-
-        console.log("aaaa",this.user)
-
         user = this.user
 
         const status:any = getManager().getRepository('Users')
