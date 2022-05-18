@@ -23,3 +23,4 @@ app.use('/users', users_1.default);
         console.log(`Server Running here 👉 http://localhost:${PORT}`);
     });
 }).catch(error => console.log(error));
+exports.default = app;
