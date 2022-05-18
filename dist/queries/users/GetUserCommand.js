@@ -23,34 +23,3 @@ const GETCommand = (userId) => __awaiter(void 0, void 0, void 0, function* () {
         .getRawMany();
 });
 exports.GETCommand = GETCommand;
-/*export class GETCommand implements ICommand {
-    private user:string;
-
-    constructor(user:string) {
-        this.user = user
-    }
-
-    public execute = () => {
-
-        let userId:string
-
-
-        userId = this.user
-
-
-        const status:any = getManager().getRepository('Users')
-        .createQueryBuilder()
-            .where("id = :id", { id: userId})
-            .getRawOne()
-            .then(user => {
-                console.log(`user details`,user)
-                return user
-            })
-            .catch(err => {
-                console.log(`error getting user: ${err}`)
-                return false
-            })
-
-            return{status}
-    }
-}*/

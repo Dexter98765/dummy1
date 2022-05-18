@@ -34,7 +34,6 @@ class PUTCommand {
                 commandName,
                 args: this.user
             };
-            console.log("idhar", this.user);
             const command = crudCommandFactory.makeCommand(config);
             const results = command.execute();
             return results.status ?

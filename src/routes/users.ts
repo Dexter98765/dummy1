@@ -25,75 +25,100 @@ userRouter.get('/',(req:Request,res:Response)=>{
 });
 
 userRouter.post('/create',(req:Request,res:Response)=>{
+    let statusCode:any
 
+    try {
+        console.log(req.body) 
+        const user:Users = req.body
+        const commandName = 'POSTCommand'
     
-   console.log(req.body) 
-    const user:Users = req.body
-    const commandName = 'POSTCommand'
-
-    const commandConfig = {
-        commandName,
-        args: user
+        const commandConfig = {
+            commandName,
+            args: user
+        }
+    
+        const command = userCommandFactory.makeCommand(commandConfig)
+        const results = command.execute()
+        statusCode = results.status ? 200 : 500
+    
+        res.status(statusCode).json({message: 'User added successfully', data: {}});
+    }
+    catch (e:any) {
+        res.status(statusCode).json({error: e.message, data:{}});
     }
 
-    const command = userCommandFactory.makeCommand(commandConfig)
-    const results = command.execute()
-    const statusCode = results.status ? 200 : 500
+    
 
-    res.status(statusCode).json('User added successfully')
 })
 
 
 userRouter.put('/update/:id',(req:Request,res:Response)=>{
+    let statusCode:any
 
-    
-    
-     const user:Users = {...req.body,...req.params}
+    try {
 
-     const commandName = 'PUTCommand'
- 
-     const commandConfig = {
-         commandName,
-         args: user
-     }
- 
-     const command = userUpdateCommandFactory.makeCommand(commandConfig)
-     const results = command.execute()
-     const statusCode = results.status ? 200 : 500
- 
-     res.status(statusCode).json('User updated successfully')
+        const user:Users = {...req.body,...req.params}
+
+        const commandName = 'PUTCommand'
+    
+        const commandConfig = {
+            commandName,
+            args: user
+        }
+    
+        const command = userUpdateCommandFactory.makeCommand(commandConfig)
+        const results = command.execute()
+        statusCode = results.status ? 200 : 500
+    
+        res.status(statusCode).json({message: 'User updated successfully', data: {}});
+    }
+    catch (e:any) {
+        res.status(statusCode).json({error: e.message, data:{}});
+    }
+    
+
  })
 
  userRouter.delete('/delete/:id',(req:Request,res:Response)=>{
 
-    
-    
-    const user:string = req.params.id
+    let statusCode:any
 
-    const commandName = 'DELETECommand'
+    try {
 
-    const commandConfig = {
-        commandName,
-        args: user
+        const user:string = req.params.id
+
+        const commandName = 'DELETECommand'
+    
+        const commandConfig = {
+            commandName,
+            args: user
+        }
+    
+        const command = userDeleteCommandFactory.makeCommand(commandConfig)
+        const results = command.execute()
+        statusCode = results.status ? 200 : 500
+    
+        res.status(statusCode).json({message: 'User deleted successfully', data: {}});
+    }
+    catch (e:any) {
+        res.status(statusCode).json({error: e.message, data:{}});
     }
 
-    const command = userDeleteCommandFactory.makeCommand(commandConfig)
-    const results = command.execute()
-    const statusCode = results.status ? 200 : 500
+    
+    
 
-    res.status(statusCode).json('User deleted successfully')
 })
 
 
 userRouter.get('/getUsers/:id',async (req:Request,res:Response)=>{
 
-    const results = await QueryCommands.GETCommand(req.params.id)
-
-    if(!results) {
-        res.status(500).json('User detail not found') 
+    try {
+        const results = await QueryCommands.GETCommand(req.params.id)
+        res.status(200).json({message: 'Success', data: results});
     }
-
-    res.status(200).json(results)
+    catch (e:any) {
+        res.status(500).json({error: e.message, data:{}});
+    }
 })
 
 export default userRouter

@@ -8,7 +8,6 @@ class UpdateUser {
         this.execute = () => {
             let user = new Users_1.Users();
             user = this.user;
-            console.log("balu", user);
             const status = (0, typeorm_1.getManager)().getRepository('Users')
                 .createQueryBuilder()
                 .update()
@@ -19,12 +18,12 @@ class UpdateUser {
             })
                 .where("id = :id", { id: user.id })
                 .execute()
-                .then(user => {
+                .then(() => {
                 console.log(`user update success`);
                 return true;
             })
                 .catch(err => {
-                console.log(`error adding game: ${err}`);
+                console.log(`error updating: ${err}`);
                 return false;
             });
             return { status };

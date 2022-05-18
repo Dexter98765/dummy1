@@ -36,7 +36,6 @@ class POSTCommand {
             };
             const command = crudCommandFactory.makeCommand(config);
             const results = command.execute();
-            console.log("result from application", command);
             return results.status ?
                 { status: true } :
                 { status: false };

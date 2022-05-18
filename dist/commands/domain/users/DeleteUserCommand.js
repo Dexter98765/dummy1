@@ -5,19 +5,18 @@ const typeorm_1 = require("typeorm");
 class DeleteUser {
     constructor(user) {
         this.execute = () => {
-            let userId;
-            userId = this.user;
+            const userId = this.user;
             const status = (0, typeorm_1.getManager)().getRepository('Users')
                 .createQueryBuilder()
                 .delete()
                 .where("id = :id", { id: userId })
                 .execute()
-                .then(user => {
+                .then(() => {
                 console.log(`user delete success`);
                 return true;
             })
                 .catch(err => {
-                console.log(`error adding game: ${err}`);
+                console.log(`error deleting: ${err}`);
                 return false;
             });
             return { status };

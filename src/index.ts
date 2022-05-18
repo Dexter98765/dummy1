@@ -36,3 +36,5 @@ createConnection().then(connection => {
 
 }).catch(error => console.log(error));
 
+export default app;
+

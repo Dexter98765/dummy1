@@ -43,51 +43,71 @@ const userCommandFactory = new UserCommands.UserCommandFactory();
 const userUpdateCommandFactory = new UserCommands.UserPutCommandFactory();
 const userDeleteCommandFactory = new UserCommands.UserDeleteCommandFactory();
 //const userQueryCommandFactory = new QueryCommands.GETCommand();
-userRouter.get('/', (req, res, next) => {
+userRouter.get('/', (req, res) => {
     res.send('hello from users');
 });
-userRouter.post('/create', (req, res, next) => {
-    console.log(req.body);
-    const user = req.body;
-    const commandName = 'POSTCommand';
-    const commandConfig = {
-        commandName,
-        args: user
-    };
-    const command = userCommandFactory.makeCommand(commandConfig);
-    const results = command.execute();
-    const statusCode = results.status ? 200 : 500;
-    res.status(statusCode).json('User added successfully');
-});
-userRouter.put('/update/:id', (req, res, next) => {
-    const user = Object.assign(Object.assign({}, req.body), req.params);
-    const commandName = 'PUTCommand';
-    const commandConfig = {
-        commandName,
-        args: user
-    };
-    const command = userUpdateCommandFactory.makeCommand(commandConfig);
-    const results = command.execute();
-    const statusCode = results.status ? 200 : 500;
-    res.status(statusCode).json('User updated successfully');
-});
-userRouter.delete('/delete/:id', (req, res, next) => {
-    const user = req.params.id;
-    const commandName = 'DELETECommand';
-    const commandConfig = {
-        commandName,
-        args: user
-    };
-    const command = userDeleteCommandFactory.makeCommand(commandConfig);
-    const results = command.execute();
-    const statusCode = results.status ? 200 : 500;
-    res.status(statusCode).json('User deleted successfully');
-});
-userRouter.get('/getUsers/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const results = yield QueryCommands.GETCommand(req.params.id);
-    if (!results) {
-        res.status(500).json('User detail not found');
+userRouter.post('/create', (req, res) => {
+    let statusCode;
+    try {
+        console.log(req.body);
+        const user = req.body;
+        const commandName = 'POSTCommand';
+        const commandConfig = {
+            commandName,
+            args: user
+        };
+        const command = userCommandFactory.makeCommand(commandConfig);
+        const results = command.execute();
+        statusCode = results.status ? 200 : 500;
+        res.status(statusCode).json({ message: 'User added successfully', data: {} });
     }
-    res.status(200).json(results);
+    catch (e) {
+        res.status(statusCode).json({ error: e.message, data: {} });
+    }
+});
+userRouter.put('/update/:id', (req, res) => {
+    let statusCode;
+    try {
+        const user = Object.assign(Object.assign({}, req.body), req.params);
+        const commandName = 'PUTCommand';
+        const commandConfig = {
+            commandName,
+            args: user
+        };
+        const command = userUpdateCommandFactory.makeCommand(commandConfig);
+        const results = command.execute();
+        statusCode = results.status ? 200 : 500;
+        res.status(statusCode).json({ message: 'User updated successfully', data: {} });
+    }
+    catch (e) {
+        res.status(statusCode).json({ error: e.message, data: {} });
+    }
+});
+userRouter.delete('/delete/:id', (req, res) => {
+    let statusCode;
+    try {
+        const user = req.params.id;
+        const commandName = 'DELETECommand';
+        const commandConfig = {
+            commandName,
+            args: user
+        };
+        const command = userDeleteCommandFactory.makeCommand(commandConfig);
+        const results = command.execute();
+        statusCode = results.status ? 200 : 500;
+        res.status(statusCode).json({ message: 'User deleted successfully', data: {} });
+    }
+    catch (e) {
+        res.status(statusCode).json({ error: e.message, data: {} });
+    }
+});
+userRouter.get('/getUsers/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const results = yield QueryCommands.GETCommand(req.params.id);
+        res.status(200).json({ message: 'Success', data: results });
+    }
+    catch (e) {
+        res.status(500).json({ error: e.message, data: {} });
+    }
 }));
 exports.default = userRouter;

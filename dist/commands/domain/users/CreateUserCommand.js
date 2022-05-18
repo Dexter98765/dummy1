@@ -7,7 +7,6 @@ class CreateUser {
     constructor(user) {
         this.execute = () => {
             let user = new Users_1.Users();
-            console.log("aaaa", this.user);
             user = this.user;
             const status = (0, typeorm_1.getManager)().getRepository('Users')
                 .save(user)
@@ -16,7 +15,7 @@ class CreateUser {
                 return true;
             })
                 .catch(err => {
-                console.log(`error adding game: ${err}`);
+                console.log(`error adding : ${err}`);
                 return false;
             });
             return { status };
